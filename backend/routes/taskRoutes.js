@@ -5,9 +5,18 @@ const router = express.Router();
 
 // Get all tasks
 router.get("/", async (req, res) => {
-    const tasks = await Task.find();
-    res.json(tasks);
-});
+    try {
+      console.log("Fetching tasks...");
+      const tasks = await Task.find();
+      if (tasks.length === 0) {
+        console.log("No tasks found.");
+      }
+      res.json(tasks);
+    } catch (err) {
+      console.error("Error fetching tasks:", err);
+      res.status(500).json({ error: "Error fetching tasks", message: err.message });
+    }
+  });
 
 // Add a task
 router.post("/", async (req, res) => {
