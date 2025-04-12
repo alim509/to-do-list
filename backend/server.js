@@ -1,9 +1,18 @@
 const express = require("express"); // Framework for building the server
+const path = require('path'); // Utilities for handling and transforming file paths
 const mongoose = require("mongoose"); // MongoDB ODM to interact with the database
 const cors = require("cors"); // Middleware to allow Cross-Origin Resource Sharing
 require("dotenv").config(); // Loads environment variables from a .env file into process.env
 
 const app = express(); // Initialize app
+
+// Serve static files from the frontend directory
+app.use(express.static(path.join(__dirname, '../frontend')));
+
+// Handle the root route
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend', 'index.html'));
+});
 
 // Middleware to log all incoming requests
 app.use((req, res, next) => {
