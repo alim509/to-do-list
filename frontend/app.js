@@ -1,5 +1,7 @@
+const API_URL = process.env.API_URL;
+
 async function fetchTasks() {
-    const res = await fetch("http://localhost:3001/tasks");
+    const res = await fetch("${API_URL}/tasks/");
     const tasks = await res.json();
 
     // Generate list items and inject into DOM
@@ -14,7 +16,7 @@ async function addTask() {
     const title = document.getElementById("taskInput").value;
     if (!title.trim()) return; // Prevent empty tasks
 
-    await fetch("http://localhost:3001/tasks", {
+    await fetch("${API_URL}/tasks", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ title })
@@ -25,7 +27,7 @@ async function addTask() {
 }
 
 async function deleteTask(id) {
-    await fetch(`http://localhost:3001/tasks/${id}`, { method: "DELETE" }); // Note the backticks here too!
+    await fetch('${API_URL}/tasks/${id}', { method: "DELETE" }); // Note the backticks here too!
     fetchTasks();
 }
 
